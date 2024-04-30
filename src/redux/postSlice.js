@@ -7,7 +7,9 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 export const createNewpost = createAsyncThunk(
   "post/createNewpost",
   async (postCredentials) => {
-    const request = await axios.post(`/api/post/create`, postCredentials);
+    const request = await axios.post(`/api/post/create`, postCredentials, {
+      withCredentials: true,
+    });
 
     const response = await request.data;
     return response;
