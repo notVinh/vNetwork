@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 export const createNewpost = createAsyncThunk(
   "post/createNewpost",
@@ -26,7 +26,10 @@ export const likePost = createAsyncThunk(
   async (postCredentials) => {
     const request = await axios.put(
       `/api/post/likepost/${postCredentials.postId}`,
-      postCredentials.user
+      postCredentials.user,
+      {
+        withCredentials: true,
+      }
     );
 
     const response = await request.data;

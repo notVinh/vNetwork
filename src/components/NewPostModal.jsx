@@ -77,7 +77,7 @@ const NewPostModal = ({ openModal, closeModal }) => {
         setFiles([]);
         setLoading(false);
         closeModal();
-        // navigate(0);
+        navigate(0);
         toast.success("Post successfully");
       });
     });
