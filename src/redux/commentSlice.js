@@ -7,7 +7,13 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 export const createNewComment = createAsyncThunk(
   "comment/createNewComment",
   async (commentCredentials) => {
-    const request = await axios.post(`/api/comment/create`, commentCredentials);
+    const request = await axios.post(
+      `/api/comment/create`,
+      commentCredentials,
+      {
+        withCredentials: true,
+      }
+    );
 
     const response = await request.data;
     return response;
@@ -29,7 +35,10 @@ export const likeComment = createAsyncThunk(
   async (commentCredentials) => {
     const request = await axios.put(
       `/api/comment/likeComment/${commentCredentials.commentId}`,
-      commentCredentials.user
+      commentCredentials.user,
+      {
+        withCredentials: true,
+      }
     );
 
     const response = await request.data;
@@ -41,7 +50,10 @@ export const deleteComment = createAsyncThunk(
   "comment/deleteComment",
   async (commentCredentials) => {
     const request = await axios.delete(
-      `/api/comment/deleteComment/${commentCredentials.commentId}`
+      `/api/comment/deleteComment/${commentCredentials.commentId}`,
+      {
+        withCredentials: true,
+      }
     );
 
     const response = await request.data;
@@ -53,7 +65,10 @@ export const deleteCommentByPost = createAsyncThunk(
   "comment/deleteCommentByPost",
   async (postCredentials) => {
     const request = await axios.delete(
-      `/api/comment/deleteCommentByPost/${postCredentials.postId}`
+      `/api/comment/deleteCommentByPost/${postCredentials.postId}`,
+      {
+        withCredentials: true,
+      }
     );
 
     const response = await request.data;

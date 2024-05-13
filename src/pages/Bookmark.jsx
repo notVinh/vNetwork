@@ -1,150 +1,158 @@
-import React from "react";
-import { toast } from "react-toastify";
+import { Autocomplete, TextField } from "@mui/material";
+import useGetPost from "../hooks/useGetPost";
+import useGetMyPost from "../zustand/useGetMyPost";
+
+const top100Films = [
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+  { title: "The Godfather: Part II", year: 1974 },
+  { title: "The Dark Knight", year: 2008 },
+  { title: "12 Angry Men", year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+  { title: "Pulp Fiction", year: 1994 },
+  {
+    title: "The Lord of the Rings: The Return of the King",
+    year: 2003,
+  },
+  { title: "The Good, the Bad and the Ugly", year: 1966 },
+  { title: "Fight Club", year: 1999 },
+  {
+    title: "The Lord of the Rings: The Fellowship of the Ring",
+    year: 2001,
+  },
+  {
+    title: "Star Wars: Episode V - The Empire Strikes Back",
+    year: 1980,
+  },
+  { title: "Forrest Gump", year: 1994 },
+  { title: "Inception", year: 2010 },
+  {
+    title: "The Lord of the Rings: The Two Towers",
+    year: 2002,
+  },
+  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
+  { title: "Goodfellas", year: 1990 },
+  { title: "The Matrix", year: 1999 },
+  { title: "Seven Samurai", year: 1954 },
+  {
+    title: "Star Wars: Episode IV - A New Hope",
+    year: 1977,
+  },
+  { title: "City of God", year: 2002 },
+  { title: "Se7en", year: 1995 },
+  { title: "The Silence of the Lambs", year: 1991 },
+  { title: "It's a Wonderful Life", year: 1946 },
+  { title: "Life Is Beautiful", year: 1997 },
+  { title: "The Usual Suspects", year: 1995 },
+  { title: "Léon: The Professional", year: 1994 },
+  { title: "Spirited Away", year: 2001 },
+  { title: "Saving Private Ryan", year: 1998 },
+  { title: "Once Upon a Time in the West", year: 1968 },
+  { title: "American History X", year: 1998 },
+  { title: "Interstellar", year: 2014 },
+  { title: "Casablanca", year: 1942 },
+  { title: "City Lights", year: 1931 },
+  { title: "Psycho", year: 1960 },
+  { title: "The Green Mile", year: 1999 },
+  { title: "The Intouchables", year: 2011 },
+  { title: "Modern Times", year: 1936 },
+  { title: "Raiders of the Lost Ark", year: 1981 },
+  { title: "Rear Window", year: 1954 },
+  { title: "The Pianist", year: 2002 },
+  { title: "The Departed", year: 2006 },
+  { title: "Terminator 2: Judgment Day", year: 1991 },
+  { title: "Back to the Future", year: 1985 },
+  { title: "Whiplash", year: 2014 },
+  { title: "Gladiator", year: 2000 },
+  { title: "Memento", year: 2000 },
+  { title: "The Prestige", year: 2006 },
+  { title: "The Lion King", year: 1994 },
+  { title: "Apocalypse Now", year: 1979 },
+  { title: "Alien", year: 1979 },
+  { title: "Sunset Boulevard", year: 1950 },
+  {
+    title:
+      "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+    year: 1964,
+  },
+  { title: "The Great Dictator", year: 1940 },
+  { title: "Cinema Paradiso", year: 1988 },
+  { title: "The Lives of Others", year: 2006 },
+  { title: "Grave of the Fireflies", year: 1988 },
+  { title: "Paths of Glory", year: 1957 },
+  { title: "Django Unchained", year: 2012 },
+  { title: "The Shining", year: 1980 },
+  { title: "WALL·E", year: 2008 },
+  { title: "American Beauty", year: 1999 },
+  { title: "The Dark Knight Rises", year: 2012 },
+  { title: "Princess Mononoke", year: 1997 },
+  { title: "Aliens", year: 1986 },
+  { title: "Oldboy", year: 2003 },
+  { title: "Once Upon a Time in America", year: 1984 },
+  { title: "Witness for the Prosecution", year: 1957 },
+  { title: "Das Boot", year: 1981 },
+  { title: "Citizen Kane", year: 1941 },
+  { title: "North by Northwest", year: 1959 },
+  { title: "Vertigo", year: 1958 },
+  {
+    title: "Star Wars: Episode VI - Return of the Jedi",
+    year: 1983,
+  },
+  { title: "Reservoir Dogs", year: 1992 },
+  { title: "Braveheart", year: 1995 },
+  { title: "M", year: 1931 },
+  { title: "Requiem for a Dream", year: 2000 },
+  { title: "Amélie", year: 2001 },
+  { title: "A Clockwork Orange", year: 1971 },
+  { title: "Like Stars on Earth", year: 2007 },
+  { title: "Taxi Driver", year: 1976 },
+  { title: "Lawrence of Arabia", year: 1962 },
+  { title: "Double Indemnity", year: 1944 },
+  {
+    title: "Eternal Sunshine of the Spotless Mind",
+    year: 2004,
+  },
+  { title: "Amadeus", year: 1984 },
+  { title: "To Kill a Mockingbird", year: 1962 },
+  { title: "Toy Story 3", year: 2010 },
+  { title: "Logan", year: 2017 },
+  { title: "Full Metal Jacket", year: 1987 },
+  { title: "Dangal", year: 2016 },
+  { title: "The Sting", year: 1973 },
+  { title: "2001: A Space Odyssey", year: 1968 },
+  { title: "Singin' in the Rain", year: 1952 },
+  { title: "Toy Story", year: 1995 },
+  { title: "Bicycle Thieves", year: 1948 },
+  { title: "The Kid", year: 1921 },
+  { title: "Inglourious Basterds", year: 2009 },
+  { title: "Snatch", year: 2000 },
+  { title: "3 Idiots", year: 2009 },
+  { title: "Monty Python and the Holy Grail", year: 1975 },
+];
 
 const Bookmark = () => {
+  const { posts, loading } = useGetPost();
+  console.log(posts);
+  const options = top100Films.map((option) => {
+    const firstLetter = option.title[0].toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+      ...option,
+    };
+  });
   return (
-    <>
-      <div className="flex items-center justify-center w-screen h-screen bg-white dark:bg-gray-800">
-        <div className="bg-white dark:bg-gray-800 text-black dark:text-gray-200 p-4 antialiased flex max-w-lg">
-          <img
-            className="rounded-full h-8 w-8 mr-2 mt-1 "
-            src="https://picsum.photos/id/1027/200/200"
-          />
-          <div>
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-3xl px-4 pt-2 pb-2.5">
-              <div className="font-semibold text-sm leading-relaxed">
-                Jon Doe
-              </div>
-              <div className="text-normal leading-snug md:leading-normal">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
-            </div>
-            <div className="text-sm ml-4 mt-0.5 text-gray-500 dark:text-gray-400">
-              14 w
-            </div>
-            <div className="bg-white dark:bg-gray-700 border border-white dark:border-gray-700 rounded-full float-right -mt-8 mr-0.5 flex shadow items-center ">
-              <svg
-                className="p-0.5 h-5 w-5 rounded-full z-20 bg-white dark:bg-gray-700"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-              >
-                <defs>
-                  <linearGradient id="a1" x1="50%" x2="50%" y1="0%" y2="100%">
-                    <stop offset="0%" stopColor="#18AFFF" />
-                    <stop offset="100%" stopColor="#0062DF" />
-                  </linearGradient>
-                  <filter
-                    id="c1"
-                    width="118.8%"
-                    height="118.8%"
-                    x="-9.4%"
-                    y="-9.4%"
-                    filterUnits="objectBoundingBox"
-                  >
-                    <feGaussianBlur
-                      in="SourceAlpha"
-                      result="shadowBlurInner1"
-                      stdDeviation="1"
-                    />
-                    <feOffset
-                      dy="-1"
-                      in="shadowBlurInner1"
-                      result="shadowOffsetInner1"
-                    />
-                    <feComposite
-                      in="shadowOffsetInner1"
-                      in2="SourceAlpha"
-                      k2="-1"
-                      k3="1"
-                      operator="arithmetic"
-                      result="shadowInnerInner1"
-                    />
-                    <feColorMatrix
-                      in="shadowInnerInner1"
-                      values="0 0 0 0 0 0 0 0 0 0.299356041 0 0 0 0 0.681187726 0 0 0 0.3495684 0"
-                    />
-                  </filter>
-                  <path
-                    id="b1"
-                    d="M8 0a8 8 0 00-8 8 8 8 0 1016 0 8 8 0 00-8-8z"
-                  />
-                </defs>
-                <g fill="none">
-                  <use fill="url(#a1)" xlinkHref="#b1" />
-                  <use fill="black" filter="url(#c1)" xlinkHref="#b1" />
-                  <path
-                    fill="white"
-                    d="M12.162 7.338c.176.123.338.245.338.674 0 .43-.229.604-.474.725a.73.73 0 01.089.546c-.077.344-.392.611-.672.69.121.194.159.385.015.62-.185.295-.346.407-1.058.407H7.5c-.988 0-1.5-.546-1.5-1V7.665c0-1.23 1.467-2.275 1.467-3.13L7.361 3.47c-.005-.065.008-.224.058-.27.08-.079.301-.2.635-.2.218 0 .363.041.534.123.581.277.732.978.732 1.542 0 .271-.414 1.083-.47 1.364 0 0 .867-.192 1.879-.199 1.061-.006 1.749.19 1.749.842 0 .261-.219.523-.316.666zM3.6 7h.8a.6.6 0 01.6.6v3.8a.6.6 0 01-.6.6h-.8a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6z"
-                  />
-                </g>
-              </svg>
-              <svg
-                className="p-0.5 h-5 w-5 rounded-full -ml-1.5 bg-white dark:bg-gray-700"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 16 16"
-              >
-                <defs>
-                  <linearGradient id="a2" x1="50%" x2="50%" y1="0%" y2="100%">
-                    <stop offset="0%" stopColor="#FF6680" />
-                    <stop offset="100%" stopColor="#E61739" />
-                  </linearGradient>
-                  <filter
-                    id="c2"
-                    width="118.8%"
-                    height="118.8%"
-                    x="-9.4%"
-                    y="-9.4%"
-                    filterUnits="objectBoundingBox"
-                  >
-                    <feGaussianBlur
-                      in="SourceAlpha"
-                      result="shadowBlurInner1"
-                      stdDeviation="1"
-                    />
-                    <feOffset
-                      dy="-1"
-                      in="shadowBlurInner1"
-                      result="shadowOffsetInner1"
-                    />
-                    <feComposite
-                      in="shadowOffsetInner1"
-                      in2="SourceAlpha"
-                      k2="-1"
-                      k3="1"
-                      operator="arithmetic"
-                      result="shadowInnerInner1"
-                    />
-                    <feColorMatrix
-                      in="shadowInnerInner1"
-                      values="0 0 0 0 0.710144928 0 0 0 0 0 0 0 0 0 0.117780134 0 0 0 0.349786932 0"
-                    />
-                  </filter>
-                  <path id="b2" d="M8 0a8 8 0 100 16A8 8 0 008 0z" />
-                </defs>
-                <g fill="none">
-                  <use fill="url(#a2)" xlinkHref="#b2" />
-                  <use fill="black" filter="url(#c2)" xlinkHref="#b2" />
-                  <path
-                    fill="white"
-                    d="M10.473 4C8.275 4 8 5.824 8 5.824S7.726 4 5.528 4c-2.114 0-2.73 2.222-2.472 3.41C3.736 10.55 8 12.75 8 12.75s4.265-2.2 4.945-5.34c.257-1.188-.36-3.41-2.472-3.41"
-                  />
-                </g>
-              </svg>
-              <span className="text-sm ml-1 pr-1.5 text-gray-500 dark:text-gray-300">
-                3
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <Autocomplete
+      id="grouped-demo"
+      options={options.sort(
+        (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+      )}
+      groupBy={(option) => option.firstLetter}
+      getOptionLabel={(option) => option.title}
+      sx={{ width: 300 }}
+      renderInput={(params) => (
+        <TextField {...params} label="With categories" />
+      )}
+    />
   );
 };
 

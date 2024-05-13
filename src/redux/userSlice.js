@@ -30,7 +30,9 @@ export const loginGoogleUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (userCredentials) => {
-    const request = await axios.post(`/api/auth/signin`, userCredentials);
+    const request = await axios.post(`/api/auth/signin`, userCredentials, {
+      withCredentials: true,
+    });
 
     const response = await request.data;
     localStorage.setItem("user", JSON.stringify(response));

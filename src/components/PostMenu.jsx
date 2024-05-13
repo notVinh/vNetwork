@@ -1,14 +1,9 @@
-import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
 import { useDispatch } from "react-redux";
-import { deleteComment, deleteCommentByPost } from "../redux/commentSlice";
-import { comment } from "postcss";
+import { deleteCommentByPost } from "../redux/commentSlice";
 import { useState } from "react";
-import { useEffect } from "react";
 import { deletePost } from "../redux/postSlice";
 import { useNavigate } from "react-router-dom";
 

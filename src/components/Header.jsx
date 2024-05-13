@@ -8,25 +8,20 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import NewPostModal from "./NewPostModal";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signoutUser } from "../redux/userSlice";
 import { toast } from "react-toastify";
-
-const getUser = () => {
-  let user = localStorage.getItem("user");
-  if (user) {
-    user = JSON.parse(user);
-  } else {
-    user = null;
-  }
-  return user;
-};
+import { useAuthContext } from "../context/AuthContext";
+import Nofication from "./Nofication";
+import Search from "./Search";
+import useDebounc from "../hooks/useDebounc";
 
 const Header = () => {
-  const [user, setUser] = useState(getUser());
+  const { authUser } = useAuthContext();
+  const [user, setUser] = useState(authUser);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openNewPost, setOpenNewPost] = useState(false);
 
@@ -51,6 +46,7 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <>
       <div className="min-h-20 bg-white text-textColor flex justify-between items-center px-6 dark:bg-dark-2 shadow-md">
@@ -73,25 +69,28 @@ const Header = () => {
             />
           </div>
 
-          <div className="group mx-3 rounded-full p-2 flex items-center justify-center hover:bg-[#877eff] cursor-pointer">
-            <img
-              src="/assets/icons/search2.svg"
-              className="w-[30px] group-hover:invert-white"
-            />
-          </div>
-          <div className="group mx-3 rounded-full p-2 flex items-center justify-center hover:bg-[#877eff] cursor-pointer">
+          <Search />
+
+          <div
+            className="group mx-3 rounded-full p-2 flex items-center justify-center hover:bg-[#877eff] cursor-pointer"
+            onClick={() => navigate("/chat")}
+          >
             <img
               src="/assets/icons/chat2.svg"
               className="w-[30px] group-hover:invert-white"
             />
           </div>
-          <div className="group mx-3 rounded-full p-2 flex items-center justify-center hover:bg-[#877eff] cursor-pointer">
+          {/* <div className="group mx-3 rounded-full p-2 flex items-center justify-center hover:bg-[#877eff] cursor-pointer">
             <img
               src="/assets/icons/bell.svg"
               className="w-[30px] group-hover:invert-white"
             />
-          </div>
+          </div> */}
+          {/* <div className="group mx-3 rounded-full p-2 flex items-center justify-center hover:bg-[#877eff] cursor-pointer"> */}
+          <Nofication />
+          {/* </div> */}
         </div>
+
         <div
           onClick={() => {
             navigate("/login");

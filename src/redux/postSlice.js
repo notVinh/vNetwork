@@ -43,7 +43,10 @@ export const deletePost = createAsyncThunk(
   "post/deletePost",
   async (postCredentials) => {
     const request = await axios.delete(
-      `/api/post/deletepost/${postCredentials.postId}`
+      `/api/post/deletepost/${postCredentials.postId}`,
+      {
+        withCredentials: true,
+      }
     );
 
     const response = await request.data;

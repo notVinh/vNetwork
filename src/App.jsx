@@ -12,6 +12,10 @@ import { Outlet, Navigate } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
+import { SocketContextProvider } from "./context/SocketContext.jsx";
+import Chat from "./pages/Chat.jsx";
+import MyPost from "./pages/MyPost.jsx";
 
 const PrivateRoute = () => {
   const currenUser = localStorage.getItem("user");
@@ -32,7 +36,14 @@ const OnlyAdminPrivateRoute = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <UserLayout />,
+    element: (
+      <AuthContextProvider>
+        <SocketContextProvider>
+          {" "}
+          <UserLayout />
+        </SocketContextProvider>
+      </AuthContextProvider>
+    ),
     children: [{ path: "", element: <Home /> }],
   },
   {
@@ -48,10 +59,18 @@ const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       {
-        element: <UserLayout />,
+        element: (
+          <AuthContextProvider>
+            <SocketContextProvider>
+              <UserLayout />
+            </SocketContextProvider>
+          </AuthContextProvider>
+        ),
         children: [
           { path: "/bookmark", element: <Bookmark /> },
+          { path: "/mypost", element: <MyPost /> },
           { path: "/people", element: <People /> },
+          { path: "/chat", element: <Chat /> },
         ],
       },
     ],
@@ -61,7 +80,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <RouterProvider router={router}></RouterProvider>
       <ToastContainer />
     </>
   );

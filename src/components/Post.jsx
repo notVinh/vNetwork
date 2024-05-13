@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Comment from "./Comment";
-import TransitionsModal from "./NewPostModal";
 import ImagePost from "./ImagePost";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../redux/userSlice";
 import { multiFormatDateString } from "../utils";
-import PostDetail from "./PostDetail";
 import PostAction from "./PostAction";
 
 const Post = ({ postData, currentUser }) => {
@@ -72,6 +69,7 @@ const Post = ({ postData, currentUser }) => {
                 <PostAction
                   postData={postData}
                   postId={postData?._id}
+                  authorId={authorData._id}
                   currentUserId={currentUser?._id}
                   isLiked={postData.likes.includes(
                     currentUser && currentUser?._id

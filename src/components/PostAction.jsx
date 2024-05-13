@@ -1,11 +1,10 @@
-import React, { useEffect, useReducer, useState } from "react";
+import { useState } from "react";
 import PostDetail from "./PostDetail";
 import { useDispatch } from "react-redux";
 import { likePost } from "../redux/postSlice";
-import { getPostComment } from "../redux/commentSlice";
 import PostMenu from "./PostMenu";
 
-const PostAction = ({ postData, postId, currentUserId, isLiked }) => {
+const PostAction = ({ postData, authorId, postId, currentUserId, isLiked }) => {
   const [openPostDetail, setOpenPostDetail] = useState(false);
   const [liked, setLiked] = useState(isLiked);
   const [likedNumber, setLikedNumber] = useState(postData.likesCount);
@@ -13,12 +12,14 @@ const PostAction = ({ postData, postId, currentUserId, isLiked }) => {
 
   // console.log(currentUserId, postId, isLiked);
 
+  // console.log(authorId);
+
   const dispatch = useDispatch();
 
   const handleLikePost = () => {
     const postCredentials = {
       postId: postId,
-      user: { userId: currentUserId },
+      user: { userId: currentUserId, authorId: authorId },
     };
     // console.log(postCredentials);
     dispatch(likePost(postCredentials));

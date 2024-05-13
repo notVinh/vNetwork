@@ -21,7 +21,7 @@ const NewPostModal = ({ openModal, closeModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const notify = () => toast("Wow so easy !");
+  // const notify = () => toast("Wow so easy !");
 
   const handleUploadImage = async () => {
     const downloadUrl = []; // Initialize an empty array to store download URLs

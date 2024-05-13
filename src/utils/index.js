@@ -7,12 +7,18 @@ export const sidebarItem = [
   },
   {
     id: 2,
+    name: "My Post",
+    url: "/mypost",
+    imgURL: "/assets/icons/postcard.svg",
+  },
+  {
+    id: 3,
     name: "Bookmark",
     url: "/bookmark",
     imgURL: "/assets/icons/bookmark.svg",
   },
   {
-    id: 3,
+    id: 4,
     name: "People",
     url: "/people",
     imgURL: "/assets/icons/people.svg",

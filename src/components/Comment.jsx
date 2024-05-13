@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "../redux/userSlice";
 import { likeComment } from "../redux/commentSlice";
 import CommentMenu from "./CommentMenu";
 import { multiFormatDateStringAbb } from "../utils";
-
-const getCurrentUser = () => {
-  let user = localStorage.getItem("user");
-  if (user) {
-    user = JSON.parse(user);
-  } else {
-    user = null;
-  }
-  return user;
-};
+import { useAuthContext } from "../context/AuthContext";
 
 const Comment = ({ data, isLiked, rerenderLoad }) => {
-  const [currentUser, setCurrentUser] = useState(getCurrentUser());
+  const { authUser } = useAuthContext();
+
+  const [currentUser, setCurrentUser] = useState(authUser);
   const [userId, setUserId] = useState(data.userId);
   const [userData, setUserData] = useState("");
   const [liked, setLiked] = useState(isLiked || false);
@@ -97,7 +90,7 @@ const Comment = ({ data, isLiked, rerenderLoad }) => {
             commentId={data._id}
             rerender={(item) => {
               rerenderLoad(item);
-              console.log(item);
+              // console.log(item);
             }}
           />
         </div>

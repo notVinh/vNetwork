@@ -1,19 +1,10 @@
-import React, { useEffect, useMemo, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import ImagePost from "./ImagePost";
 import Comment from "./Comment";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createNewComment, getPostComment } from "../redux/commentSlice";
 import { toast } from "react-toastify";
-
-const getCurrentUser = () => {
-  let user = localStorage.getItem("user");
-  if (user) {
-    user = JSON.parse(user);
-  } else {
-    user = null;
-  }
-  return user;
-};
+import { useAuthContext } from "../context/AuthContext";
 
 const PostDetail = ({
   data,
@@ -22,7 +13,9 @@ const PostDetail = ({
   likedNumber,
   commentNumber,
 }) => {
-  const [currentUser, setCurrentUser] = useState(getCurrentUser());
+  const { authUser } = useAuthContext();
+
+  const [currentUser, setCurrentUser] = useState(authUser);
 
   const [comment, setComment] = useState("");
   const [toggleComment, setToggleComment] = useState(true);
