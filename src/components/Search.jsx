@@ -13,8 +13,6 @@ const Search = () => {
 
   const { setSearchText } = useSearch();
 
-  console.log(result);
-
   return (
     <div className="w-70 relative">
       {showSearchIcon && (

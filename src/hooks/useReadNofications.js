@@ -9,7 +9,7 @@ const useReadNofications = () => {
     // console.log(message);
     setLoading(true);
     try {
-      const res = await axios.post(`api/nofication/seenall/${authUser._id}`, {
+      const res = await axios.post(`/api/nofication/seenall`, {
         withCredentials: true,
       });
       console.log(res);

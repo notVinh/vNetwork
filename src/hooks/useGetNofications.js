@@ -17,7 +17,7 @@ const useGetNofications = () => {
     const getMessages = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`api/nofication/get/${authUser._id}`, {
+        const res = await axios.get(`/api/nofication/get`, {
           withCredentials: true,
         });
         const data = await res.data;

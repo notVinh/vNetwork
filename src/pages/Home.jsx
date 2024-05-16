@@ -13,13 +13,20 @@ const Home = () => {
 
   const [currentUser, setCurrentUser] = useState(authUser);
   const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (posts.length === 0) {
+      setTimeout(() => {
+        setError(true);
+      }, 10000);
+    }
     const fetchPost = async () => {
       await dispatch(getPost()).then((result) => {
         setPosts(result.payload.posts);
+
         setLoading(false);
       });
     };
@@ -33,12 +40,22 @@ const Home = () => {
         <div className="flex justify-center w-full">
           <div className="h-screen overflow-scroll pb-14 w-full flex flex-col items-center">
             {loading && (
-              <div className="flex w-full justify-center my-3">
-                <img
-                  src="assets/icons/loading.svg"
-                  className="w-10 rounded-full bg-white"
-                />
-              </div>
+              <>
+                <div
+                  className={`${
+                    error ? "block" : "hidden"
+                  } text-text-light-2 mt-5 `}
+                >
+                  My API is uploaded to a free server, your request may be
+                  delayed for about 30 seconds. Please wait.
+                </div>
+                <div className="flex w-full justify-center my-3">
+                  <img
+                    src="assets/icons/loading.svg"
+                    className="w-10 rounded-full bg-white"
+                  />
+                </div>
+              </>
             )}
             {posts.map((post) => (
               <div key={post._id}>
