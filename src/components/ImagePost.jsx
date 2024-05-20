@@ -6,9 +6,7 @@ const ImagePost = ({ img, full }) => {
     <img
       src={vinh}
       alt=""
-      className={`${
-        full ? `w-full` : `w-[220px] h-[220px]`
-      }  rounded-md object-cover border border-light-2 dark:border-dark-5 p-2`}
+      className={` w-[80px] h-[80px] xl:w-[240px] xl:h-[240px] rounded-md object-cover border border-light-2 dark:border-dark-5 p-2`}
     />
   );
 };

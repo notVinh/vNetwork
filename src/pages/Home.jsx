@@ -36,6 +36,16 @@ const Home = () => {
   return (
     <div className="flex-1 h-screen overflow-hidden bg-[#f0f2f5] dark:bg-dark-3">
       <Header />
+      {/* <div className="xl:hidden flex justify-between w-screen px-5 py-2">
+        <img src={currentUser?.profilePicture} alt="" className="w-10" />
+        <div className="border-2 flex rounded-full flex-1 ml-5">
+          <input
+            type="text"
+            className="mx-5 outline-none bg:tranparent dark:bg-transparent  "
+            placeholder="What do you think ?"
+          />
+        </div>
+      </div> */}
       <section className="flex justify-between w-full ">
         <div className="flex justify-center w-full">
           <div className="h-screen overflow-scroll pb-14 w-full flex flex-col items-center">
@@ -58,7 +68,7 @@ const Home = () => {
               </>
             )}
             {posts.map((post) => (
-              <div key={post._id}>
+              <div key={post._id} className="flex justify-center">
                 <Post postData={post} currentUser={currentUser} />
               </div>
             ))}

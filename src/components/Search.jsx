@@ -36,7 +36,7 @@ const Search = () => {
       >
         <input
           type="text"
-          className="text-black outline-none ml-3 mr-5 pl-1"
+          className="text-black dark:text-white outline-none ml-3 mr-5 pl-1 w-32 xl:w-auto bg-transparent"
           onBlur={() => {
             setShowSearch(false);
             setShowSearchIcon(true);

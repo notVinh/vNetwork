@@ -92,7 +92,7 @@ const NewPostModal = ({ openModal, closeModal }) => {
         onClick={closeModal}
       ></div>
       <div
-        className={`bg-light-2 dark:bg-dark-3 border-8 text-text-light-1 dark:text-text-dark-1 dark:border-dark-5 w-[700px] h-[700px] flex rounded-xl justify-between fixed z-50 -50 top-0 right-0 bottom-0 left-0 m-auto ${
+        className={`bg-light-2 dark:bg-dark-3 border-8 text-text-light-1 dark:text-text-dark-1 dark:border-dark-5 xl:w-[700px] xl:h-[700px] flex rounded-xl justify-between fixed z-50 -50 top-0 right-0 bottom-0 left-0 mx-5 my-5 xl:m-auto ${
           !openModal && "hidden"
         }`}
       >

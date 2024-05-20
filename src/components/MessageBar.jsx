@@ -10,8 +10,8 @@ const MessageBar = () => {
   return (
     <>
       <div
-        className={`text-text-light-1 dark:test-text-dark-1 bg-light-1 dark:bg-dark-2 border-2 dark:border-dark-5 m-3 p-3 rounded-xl ${
-          open && "w-[320px]"
+        className={`text-text-light-1 dark:test-text-dark-1 bg-light-1 dark:bg-dark-2 border-2 dark:border-dark-5 m-3 p-3 rounded-xl hidden xl:block ${
+          open && "xl:w-[320px]"
         }`}
       >
         <div>
