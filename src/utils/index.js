@@ -62,10 +62,11 @@ export const multiFormatDateString = (timestamp = "") => {
   const diffInMinutes = diffInSeconds / 60;
   const diffInHours = diffInMinutes / 60;
   const diffInDays = diffInHours / 24;
+  const diffInMonths = diffInDays / 30;
 
   switch (true) {
     case Math.floor(diffInDays) >= 30:
-      return multiFormatDateString(timestamp);
+      return `${Math.floor(diffInMonths)} month ago`;
     case Math.floor(diffInDays) === 1:
       return `${Math.floor(diffInDays)} day ago`;
     case Math.floor(diffInDays) > 1 && diffInDays < 30:
@@ -89,10 +90,11 @@ export const multiFormatDateStringAbb = (timestamp = "") => {
   const diffInMinutes = diffInSeconds / 60;
   const diffInHours = diffInMinutes / 60;
   const diffInDays = diffInHours / 24;
+  const diffInMonths = diffInDays / 30;
 
   switch (true) {
     case Math.floor(diffInDays) >= 30:
-      return multiFormatDateStringAbb(timestamp);
+      return `${Math.floor(diffInMonths)} month ago`;
     case Math.floor(diffInDays) === 1:
       return `${Math.floor(diffInDays)} d`;
     case Math.floor(diffInDays) > 1 && diffInDays < 30:
