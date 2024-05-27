@@ -7,6 +7,9 @@ import { getPost } from "../redux/postSlice";
 import { useAuthContext } from "../context/AuthContext";
 import MessageBar from "../components/MessageBar";
 import MessageBox from "../components/MessageBox";
+import toggleSidebar from "../zustand/toggleSidebar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { sidebarItem } from "../utils";
 
 const Home = () => {
   const { authUser } = useAuthContext();
@@ -16,6 +19,11 @@ const Home = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const { isOpen, toggle } = toggleSidebar();
 
   useEffect(() => {
     if (posts.length === 0) {
@@ -36,16 +44,44 @@ const Home = () => {
   return (
     <div className="flex-1 h-screen overflow-hidden bg-[#f0f2f5] dark:bg-dark-3">
       <Header />
-      {/* <div className="xl:hidden flex justify-between w-screen px-5 py-2">
-        <img src={currentUser?.profilePicture} alt="" className="w-10" />
-        <div className="border-2 flex rounded-full flex-1 ml-5">
-          <input
-            type="text"
-            className="mx-5 outline-none bg:tranparent dark:bg-transparent  "
-            placeholder="What do you think ?"
-          />
+      <nav className={` ${isOpen && "min-w-[270px]"} justify-between `}>
+        <div className="w-full flex justify-evenly px-5 xl:hidden ">
+          {sidebarItem.map((item) => (
+            <div
+              className={` my-2 flex h-11 items-center rounded-lg px-2 cursor-pointer hover:bg-slate-400 ${
+                location.pathname === item.url &&
+                "bg-gradient-to-r  from-[#877eff] to-[#e879de] text-text-dark-1"
+              }`}
+              key={item.id}
+              onClick={() => {
+                setSelectedIndex(item.id);
+                navigate(item.url);
+              }}
+            >
+              <div className="text-light-2xl mx-1 ">
+                <img
+                  src={item.imgURL}
+                  alt=""
+                  className={`${
+                    location.pathname === item.url &&
+                    "invert brightness-0 transition"
+                  } `}
+                />
+              </div>
+              <div
+                className={`text-text-light-2 mx-3 ${
+                  isOpen ? "block" : "hidden"
+                } ${
+                  location.pathname === item.url &&
+                  "invert brightness-0 transition"
+                }`}
+              >
+                {item.name}
+              </div>
+            </div>
+          ))}
         </div>
-      </div> */}
+      </nav>
       <section className="flex justify-between w-full ">
         <div className="flex justify-center w-full">
           <div className="h-screen overflow-scroll pb-14 w-full flex flex-col items-center">
